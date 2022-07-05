@@ -12,4 +12,13 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
+import React from 'react-dom';
+import ReactDOM from "react-dom";
+import {BrowserRouter as Router} from 'react-router-dom';
+
+import Index from "./components";
+if(document.getElementById('app')){
+    ReactDOM.render(<Router><Index/></Router>,document.getElementById('app'));
+}
+
+

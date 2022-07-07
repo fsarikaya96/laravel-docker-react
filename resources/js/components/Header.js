@@ -2,6 +2,8 @@ import * as React from "react";
 import {  Route, Routes, Link} from 'react-router-dom';
 import Home from "./Home";
 import Vehicle from "./Vehicle";
+import Passenger from "./Passenger/Passenger";
+import PassengerAdd from "./Passenger/PassengerAdd";
 
 export default function Header() {
 
@@ -17,6 +19,9 @@ export default function Header() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/vehicle">Araçlar</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/passenger">Yolcular</Link>
+                        </li>
 
                     </ul>
                 </div>
@@ -25,6 +30,8 @@ export default function Header() {
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/vehicle" element={<Vehicle/>}/>
+                <Route exact path="/passenger" element={<Passenger/>}/>
+                <Route exact path="/passenger-add" element={<PassengerAdd/>}/>
             </Routes>
 
         </div>

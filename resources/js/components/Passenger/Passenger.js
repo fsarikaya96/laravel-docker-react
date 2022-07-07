@@ -1,44 +1,77 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
+import swal from "sweetalert";
 
 class Passenger extends Component {
     state = {
-     passenger: [],
-     loading: true,
+        passenger: [],
+        loading: true,
     }
-   async componentDidMount() {
+
+    /**
+     * Passenger List
+     * @returns {Promise<void>}
+     */
+    async componentDidMount() {
         const res = await axios.get('http://localhost:8080/api/passenger');
-         // console.log(res);
-       if (res.data.success === true){
-           this.setState({
-               passenger: res.data.message,
-               loading: false
-           });
-       }
-   }
+        // console.log(res);
+        if (res.data.success === true) {
+            this.setState({
+                passenger: res.data.message,
+                loading: false
+            });
+        }
+    }
+
+    /**
+     * Passenger Delete
+     * @param e
+     * @param id
+     * @returns {Promise<void>}
+     */
+    passengerDelete = async (e, id) => {
+        const deleteBtn = e.currentTarget;
+        deleteBtn.innerText = "Siliniyor";
+        const res = await axios.delete(`http://localhost:8080/api/passenger-delete/${id}`)
+        if (res.data.success === true) {
+            await swal({
+                title: "Başarılı",
+                text: res.data.message,
+                icon: "success",
+                button: "Tamam",
+            });
+            deleteBtn.closest("tr").remove();
+        }
+    }
+
     render() {
 
         var passenger_HTMLTABLE = "";
-        if (this.state.loading){
-            passenger_HTMLTABLE = <tr><td colSpan="7"> <h3>Lütfen Bekleyiniz..</h3> </td></tr>
-        }else {
+        if (this.state.loading) {
+            passenger_HTMLTABLE = <tr>
+                <td colSpan="7"><h4>Lütfen Bekleyiniz..</h4></td>
+            </tr>
+        } else {
             passenger_HTMLTABLE =
-                this.state.passenger.map( (item) => {
+                this.state.passenger.map((item) => {
                     return (
-                         <tr key={item.id}>
-                             <td>{item.id}</td>
-                             <td>{item.name}</td>
-                             <td>{item.lastname}</td>
-                             <td>{item.phone}</td>
-                             <td>{item.type.name}</td>
-                             <td>
-                                 <Link to={`/passenger-update/${item.id}`} className="btn btn-success btn-sm">Düzenle</Link>
-                             </td>
-                             <td>
-                                 <button type="button" className="btn btn-danger btn-sm">Sil</button>
-                             </td>
-                         </tr>
+                        <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.lastname}</td>
+                            <td>{item.phone}</td>
+                            <td>{item.type.name}</td>
+                            <td>
+                                <Link to={`/passenger-edit/${item.id}`}
+                                      className="btn btn-success btn-sm">Düzenle</Link>
+                            </td>
+                            <td>
+                                <button type="button" onClick={(e) => this.passengerDelete(e, item.id)}
+                                        className="btn btn-danger btn-sm">Sil
+                                </button>
+                            </td>
+                        </tr>
                     );
                 });
         }
@@ -49,7 +82,8 @@ class Passenger extends Component {
                         <div className="card">
                             <div className="card-header">
                                 <h4> Yolcu Sayfası
-                                    <Link to="/passenger-create" className="btn btn-primary btn-sm float-end">Yolcu Ekle</Link>
+                                    <Link to="/passenger-create" className="btn btn-primary btn-sm float-end">Yolcu
+                                        Ekle</Link>
                                 </h4>
                             </div>
                             <div className="card-body">
@@ -78,4 +112,5 @@ class Passenger extends Component {
         );
     }
 }
+
 export default Passenger;

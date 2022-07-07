@@ -5,6 +5,7 @@ import Vehicle from "./Vehicle";
 import Passenger from "./Passenger/Passenger";
 import PassengerCreate from "./Passenger/PassengerCreate";
 import PassengerUpdate from "./Passenger/PassengerUpdate";
+import axios from "axios";
 
 export default function Header() {
 
@@ -33,7 +34,7 @@ export default function Header() {
                 <Route exact path="/vehicle" element={<Vehicle/>}/>
                 <Route exact path="/passenger" element={<Passenger/>}/>
                 <Route exact path="/passenger-create" element={<PassengerCreate/>}/>
-                <Route exact path="/passenger-update/:id" element={<PassengerUpdate/>}/>
+                <Route exact path="/passenger-edit/:id" element={<PassengerUpdate/>}/>
             </Routes>
 
         </div>

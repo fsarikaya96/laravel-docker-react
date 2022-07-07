@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+import swal from "sweetalert";
 
 class PassengerCreate extends Component {
 
@@ -17,10 +18,23 @@ class PassengerCreate extends Component {
             [e.target.name]: e.target.value
         });
     }
+    /**
+     * Passenger Create
+     * @param e
+     * @returns {Promise<void>}
+     */
     savePassenger = async (e) => {
         e.preventDefault();
+        document.getElementById('createBtn').disabled = true
+        document.getElementById('createBtn').innerText = "Yönlendiriliyorsunuz..";
         const res = await axios.post('http://localhost:8080/api/passenger-create', this.state);
         if (res.data.success === true) {
+            await swal({
+                title: "Başarılı",
+                text: res.data.message,
+                icon: "success",
+                button: "Tamam",
+            });
             this.setState({
                 name: '',
                 lastname: '',
@@ -29,12 +43,18 @@ class PassengerCreate extends Component {
             });
             window.location.replace('http://localhost:8080/passenger');
         } else {
+            document.getElementById('createBtn').disabled = false
+            document.getElementById('createBtn').innerText = "Ekle";
             this.setState({
-                error_list: res.data.validate_err
+                error_list: res.data.errors
             });
         }
     }
 
+    /**
+     * We list according to passenger types
+     * @returns {Promise<void>}
+     */
     async componentDidMount() {
         const response = await fetch('http://localhost:8080/api/passenger-type');
         const data = await response.json();
@@ -53,7 +73,9 @@ class PassengerCreate extends Component {
                             <div className="col-md-6">
                                 <div className="card card-outline-secondary">
                                     <div className="card-header">
-                                        <h3 className="mb-0">Yolcu Ekle</h3>
+                                        <h3 className="mb-0">Yolcu Ekle
+                                        <Link to="/passenger" className="btn btn-primary btn-sm float-end">Geri</Link>
+                                        </h3>
                                     </div>
                                     <div className="card-body">
                                         <form onSubmit={this.savePassenger}>
@@ -94,7 +116,7 @@ class PassengerCreate extends Component {
 
                                             </ul>
                                             <button className="btn btn-success mt-3 btn-block" style={{width: "100%"}}
-                                                    type="submit">Ekle
+                                                  id="createBtn"  type="submit">Ekle
                                             </button>
 
                                         </form>

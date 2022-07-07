@@ -3,7 +3,8 @@ import {  Route, Routes, Link} from 'react-router-dom';
 import Home from "./Home";
 import Vehicle from "./Vehicle";
 import Passenger from "./Passenger/Passenger";
-import PassengerAdd from "./Passenger/PassengerAdd";
+import PassengerCreate from "./Passenger/PassengerCreate";
+import PassengerUpdate from "./Passenger/PassengerUpdate";
 
 export default function Header() {
 
@@ -31,7 +32,8 @@ export default function Header() {
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/vehicle" element={<Vehicle/>}/>
                 <Route exact path="/passenger" element={<Passenger/>}/>
-                <Route exact path="/passenger-add" element={<PassengerAdd/>}/>
+                <Route exact path="/passenger-create" element={<PassengerCreate/>}/>
+                <Route exact path="/passenger-update/:id" element={<PassengerUpdate/>}/>
             </Routes>
 
         </div>

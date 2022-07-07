@@ -1,48 +1,81 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
 
-export default function Passenger() {
+class Passenger extends Component {
+    state = {
+     passenger: [],
+     loading: true,
+    }
+   async componentDidMount() {
+        const res = await axios.get('http://localhost:8080/api/passenger');
+         // console.log(res);
+       if (res.data.success === true){
+           this.setState({
+               passenger: res.data.message,
+               loading: false
+           });
+       }
+   }
+    render() {
 
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/passenger')
-            .then(response => {
-                setData(response.data)
-            })
-    }, []);
-    return (
-        <div className="container">
-            <Link className="btn btn-primary" to="/passenger-add">Ekle</Link>
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">İsim</th>
-                        <th scope="col">Soyisim</th>
-                        <th scope="col">Telefon</th>
-                        <th scope="col">Yolcu Tipi</th>
-                        <th className="d-flex justify-content-end" scope="col">Eylemler</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data.map((row,index )=> {
-                        return  (
-                                <tr key={index}>
-                                    <th scope="row">{row.id}</th>
-                                    <td>{row.name}</td>
-                                    <td>{row.lastname}</td>
-                                    <td>{row.phone}</td>
-                                    <td>{row.type.name}</td>
-                                    <td className="d-flex justify-content-end">
-                                        <Link className="btn btn-success" to={`/passenger-edit/${row.id}`}>Düzenle</Link>
-                                        <Link className="btn btn-danger" to={`/api/passenger-delete/${row.id}`}>Sil</Link>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-        </div>
-);
+        var passenger_HTMLTABLE = "";
+        if (this.state.loading){
+            passenger_HTMLTABLE = <tr><td colSpan="7"> <h3>Lütfen Bekleyiniz..</h3> </td></tr>
+        }else {
+            passenger_HTMLTABLE =
+                this.state.passenger.map( (item) => {
+                    return (
+                         <tr key={item.id}>
+                             <td>{item.id}</td>
+                             <td>{item.name}</td>
+                             <td>{item.lastname}</td>
+                             <td>{item.phone}</td>
+                             <td>{item.type.name}</td>
+                             <td>
+                                 <Link to={`/passenger-update/${item.id}`} className="btn btn-success btn-sm">Düzenle</Link>
+                             </td>
+                             <td>
+                                 <button type="button" className="btn btn-danger btn-sm">Sil</button>
+                             </td>
+                         </tr>
+                    );
+                });
+        }
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-header">
+                                <h4> Yolcu Sayfası
+                                    <Link to="/passenger-create" className="btn btn-primary btn-sm float-end">Yolcu Ekle</Link>
+                                </h4>
+                            </div>
+                            <div className="card-body">
+                                <table className="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>İsim</th>
+                                        <th>Soyisim</th>
+                                        <th>Telefon</th>
+                                        <th>Yolcu Tipi</th>
+                                        <th>Düzenle</th>
+                                        <th>Sil</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {passenger_HTMLTABLE}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
+export default Passenger;

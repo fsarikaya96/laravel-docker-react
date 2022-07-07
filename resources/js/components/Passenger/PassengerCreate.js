@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Redirect} from "react-router-dom";
 
-class PassengerAdd extends Component {
+class PassengerCreate extends Component {
 
     state = {
         name: '',
@@ -19,7 +19,7 @@ class PassengerAdd extends Component {
     }
     savePassenger = async (e) => {
         e.preventDefault();
-        const res = await axios.post('http://localhost:8080/api/passenger-add', this.state);
+        const res = await axios.post('http://localhost:8080/api/passenger-create', this.state);
         if (res.data.success === true) {
             this.setState({
                 name: '',
@@ -109,4 +109,4 @@ class PassengerAdd extends Component {
     }
 }
 
-export default PassengerAdd;
+export default PassengerCreate;

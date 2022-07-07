@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/passenger',[PassengerController::class,'index']);
-Route::post('/passenger-add',[PassengerController::class,'create']);
-Route::get('/passenger-delete/{id}',[PassengerController::class,'destroy']);
+
+Route::post('/passenger-create',[PassengerController::class,'create']);
+
 Route::get('/passenger-type',[TypeController::class,'index']);

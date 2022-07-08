@@ -24,17 +24,18 @@ class PassengerUpdate extends Component {
     }
 
     /**
-     * Passenger Type List and Passenger Edit Passenger By ID
+     * Passenger PassengerType List and Passenger Edit Passenger By ID
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-        const response = await fetch('http://localhost:8080/api/passenger-type');
-        const data = await response.json();
-        this.setState({ data });
 
-
+        const response = await axios.get('http://localhost:8080/api/passenger-type');
+        if (response.data.success === true){
+            this.setState({
+                data: response.data.message,
+            });
+        }
         const { id } = this.props.params;
-        // console.log(id);
         const res = await axios.get(`http://localhost:8080/api/passenger-edit/${id}`);
 
         if (res.data.success === true){
@@ -44,8 +45,13 @@ class PassengerUpdate extends Component {
                 phone: res.data.message.phone,
                 type: res.data.message.type_id,
             });
+
             // Select what is in database
-            document.getElementById('type').options[res.data.message.type_id].selected = true;
+            const type_value = res.data.message.type_id;
+            console.log(type_value);
+            // document.getElementById('type').options[type_value].selected = true;
+
+
         }else {
             await swal({
                 title: "Başarısız",
@@ -86,7 +92,15 @@ class PassengerUpdate extends Component {
     }
 
     render() {
-        const {data} = this.state;
+        var type_HTMLTABLE = "";
+        type_HTMLTABLE =
+            this.state.data.map((item) => {
+
+                return (
+                    <option key={item.id} value={item.id}>{item.name}</option>
+                );
+            });
+        // const {data} = this.state;
         return (
             <div className="container py-3">
                 <div className="row">
@@ -98,7 +112,7 @@ class PassengerUpdate extends Component {
                                 <div className="card card-outline-secondary">
                                     <div className="card-header">
                                         <h3 className="mb-0">Yolcu Güncelle
-                                        <Link to="/passenger" className="btn btn-primary btn-sm float-end">Geri</Link>
+                                            <Link to="/passenger" className="btn btn-primary btn-sm float-end">Geri</Link>
                                         </h3>
                                     </div>
                                     <div className="card-body">
@@ -129,19 +143,13 @@ class PassengerUpdate extends Component {
                                                 <select defaultValue={'DEFAULT'} name="type" id="type" onChange={this.handleInput}
                                                         className="form-control">
                                                     <option value="DEFAULT" disabled>Seçiniz</option>
-                                                    {data.map((item) => {
-                                                        return <option  key={item.id} value={item.id}>{item.name}</option>
-                                                    })}
-
+                                                    {type_HTMLTABLE}
                                                 </select>
                                                 <span className="text-danger">{this.state.error_list.type}</span>
 
                                             </div>
-                                            <ul>
-
-                                            </ul>
                                             <button className="btn btn-success mt-3 btn-block" style={{width: "100%"}}
-                                                   id="updateBtn" type="submit">Güncelle
+                                                    id="updateBtn" type="submit">Güncelle
                                             </button>
 
                                         </form>

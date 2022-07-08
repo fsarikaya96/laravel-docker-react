@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PassengerType extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'passenger_type';
 }

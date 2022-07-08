@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import swal from "sweetalert";
 
 class PassengerCreate extends Component {
@@ -56,13 +56,23 @@ class PassengerCreate extends Component {
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-        const response = await fetch('http://localhost:8080/api/passenger-type');
-        const data = await response.json();
-        this.setState({ data });
+        const response = await axios.get('http://localhost:8080/api/passenger-type');
+        // console.log(response);
+        if (response.data.success === true){
+            this.setState({
+                data: response.data.message,
+            });
+        }
     }
 
     render() {
-        const {data} = this.state;
+        var type_HTMLTABLE = "";
+        type_HTMLTABLE =
+            this.state.data.map((item) => {
+                return (
+                    <option key={item.id} value={item.id}>{item.name}</option>
+                );
+            });
         return (
             <div className="container py-3">
                 <div className="row">
@@ -104,17 +114,12 @@ class PassengerCreate extends Component {
                                                 <select defaultValue={'DEFAULT'} name="type" onChange={this.handleInput}
                                                         className="form-control">
                                                     <option value="DEFAULT" disabled>Seçiniz</option>
-                                                    {data.map((item) => {
-                                                    return <option key={item.id} value={item.id}>{item.name}</option>
-                                                    })}
+                                                     {type_HTMLTABLE}
 
                                                 </select>
                                                 <span className="text-danger">{this.state.error_list.type}</span>
 
                                             </div>
-                                            <ul>
-
-                                            </ul>
                                             <button className="btn btn-success mt-3 btn-block" style={{width: "100%"}}
                                                   id="createBtn"  type="submit">Ekle
                                             </button>

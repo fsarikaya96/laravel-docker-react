@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ResponseCodes;
-use App\Helpers\ResponseResult;
 use App\Models\Passenger;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +16,7 @@ class PassengerController extends Controller
     {
         $passenger = Passenger::with('type')->orderBy('id', 'desc')->get();
 
-        return ResponseResult::generate(true, $passenger, ResponseCodes::HTTP_OK);
+        return response()->json(['success' => true, 'message' => $passenger]);
 
     }
 
@@ -32,15 +29,12 @@ class PassengerController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|min:5',
             'lastname' => 'required|min:7',
-            'phone' => 'required|min:15',
+            'phone' => 'required|min:10',
             'type' => 'required'
         ]);
 
         if ($validate->fails()) {
-//            return ResponseResult::generate(false,$validate->messages(),ResponseCodes::HTTP_BAD_REQUEST);
-
-            return response()->json(['success'=>false,'errors' => $validate->messages()]);
-
+            return response()->json(['success' => false, 'errors' => $validate->errors()]);
         }
         DB::table('passengers')->insert([
             'name' => $request->name,
@@ -48,55 +42,60 @@ class PassengerController extends Controller
             'lastname' => $request->lastname,
             'type_id' => $request->type,
         ]);
-        return ResponseResult::generate(true, "Başarıyla Kaydedildi..", ResponseCodes::HTTP_OK);
+        return response()->json(['success' => true, 'message' => "Başarıyla Kaydedildi.."]);
     }
 
+    /**
+     * @param $id
+     * @return object
+     */
     public function edit($id): object
     {
         $passenger = Passenger::find($id);
         if ($passenger) {
-            return response()->json(['success' => true, 'message' => $passenger]);
-        }else {
-            return response()->json(['success' => false, 'message' => "Böyle Bir Kayıt Bulunamadı.."]);
+            return response()->json(['success' => true, 'message' => $passenger,], 200);
+        } else {
+            return response()->json(['success' => false, 'errors' => "Böyle Bir Kayıt Bulunamadı.."]);
         }
 
-        /*
-        if ($passenger) {
-            return ResponseResult::generate(true, $passenger, ResponseCodes::HTTP_OK);
-        }
-        return ResponseResult::generate(false, "Kişi Bulunamadı..", ResponseCodes::HTTP_NOT_FOUND);
-        */
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return object
+     */
     public function update(Request $request, $id): object
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required|min:5',
             'lastname' => 'required|min:7',
-            'phone' => 'required|min:15',
+            'phone' => 'required|min:10',
             'type' => 'required'
         ]);
         if ($validate->fails()) {
-            return response()->json(['success' => false, 'errors' => $validate->errors(),'errorCode' => 404]);
-//            return ResponseResult::generate(false,$validate->errors(), ResponseCodes::HTTP_BAD_REQUEST);
-        }
+            return response()->json(['success' => false, 'errors' => $validate->errors()]);
 
+        }
         Passenger::where('id', $id)->update([
             'name' => $request->name,
             'phone' => $request->phone,
             'lastname' => $request->lastname,
             'type_id' => $request->type,
         ]);
-
-        return ResponseResult::generate(true,"Başarıyla Güncellendi..", ResponseCodes::HTTP_OK);
+        return response()->json(['success' => true, 'message' => "Başarıyla Güncellendi.."]);
     }
+
+    /**
+     * @param $id
+     * @return object
+     */
     public function destroy($id): object
     {
-        $passenger = Passenger::where('id',$id)->delete();
-        if ($passenger)
-        {
-            return ResponseResult::generate(true,"Başarıyla Silinmiştir..",ResponseCodes::HTTP_OK);
+        $passenger = Passenger::where('id', $id)->delete();
+        if ($passenger) {
+            return response()->json(['success' => true, 'message' => "Başarıyla Silinmiştir.."]);
         }
-        return ResponseResult::generate(false,"Silinemedi..",ResponseCodes::HTTP_BAD_REQUEST);
+        return response()->json(['success' => false, 'message' => "Silinemedi.."], 404);
     }
 }

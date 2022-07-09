@@ -1,13 +1,23 @@
 import * as React from "react";
 import {  Route, Routes, Link} from 'react-router-dom';
 import Home from "./Home";
-import Vehicle from "./Vehicle";
+
+import Vehicle from "./Vehicle/Vehicle";
+import VehicleCreate from "./Vehicle/VehicleCreate";
+import VehicleUpdate from "./Vehicle/VehicleUpdate";
+
 import Passenger from "./Passenger/Passenger";
 import PassengerCreate from "./Passenger/PassengerCreate";
 import PassengerUpdate from "./Passenger/PassengerUpdate";
+
 import Type from "./Type/Type";
 import TypeCreate from "./Type/TypeCreate";
 import TypeUpdate from "./Type/TypeUpdate";
+
+import Driver from "./Driver/Driver";
+import DriverCreate from "./Driver/DriverCreate";
+import DriverUpdate from "./Driver/DriverUpdate";
+
 
 
 
@@ -26,6 +36,9 @@ export default function Header() {
                             <Link className="nav-link" to="/vehicle">Araçlar</Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/driver">Sürücüler</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="nav-link" to="/passenger">Yolcular</Link>
                         </li>
                         <li className="nav-item">
@@ -38,7 +51,17 @@ export default function Header() {
 
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
+
+                <Route exact path="/driver" element={<Driver/>}/>
+                <Route exact path="/driver-create" element={<DriverCreate/>}/>
+                <Route exact path="/driver-edit/:id" element={<DriverUpdate/>}/>
+
+
+
+
                 <Route exact path="/vehicle" element={<Vehicle/>}/>
+                <Route exact path="/vehicle-create" element={<VehicleCreate/>}/>
+                <Route exact path="/vehicle-edit/:id" element={<VehicleUpdate/>}/>
 
                 <Route exact path="/passenger" element={<Passenger/>}/>
                 <Route exact path="/passenger-create" element={<PassengerCreate/>}/>

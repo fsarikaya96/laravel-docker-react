@@ -3,9 +3,9 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
 
-class Type extends Component {
+class Vehicle extends Component {
     state = {
-        type: [],
+        driver: [],
         loading: true,
     }
 
@@ -14,25 +14,25 @@ class Type extends Component {
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-        const res = await axios.get('http://localhost:8080/api/passenger-type');
-        // console.log(res);
+        const res = await axios.get('http://localhost:8080/api/driver');
         if (res.data.success === true) {
             this.setState({
-                type: res.data.message,
+                driver: res.data.message,
                 loading: false
             });
         }
     }
+
     /**
-     * Type Delete
+     * Driver Delete
      * @param e
      * @param id
      * @returns {Promise<void>}
      */
-    typeDelete = async (e, id) => {
+    driverDelete = async (e, id) => {
         const deleteBtn = e.currentTarget;
         deleteBtn.innerText = "Siliniyor";
-        const res = await axios.delete(`http://localhost:8080/api/type-delete/${id}`)
+        const res = await axios.delete(`http://localhost:8080/api/driver-delete/${id}`)
         if (res.data.success === true) {
             await swal({
                 title: "Başarılı",
@@ -43,26 +43,31 @@ class Type extends Component {
             deleteBtn.closest("tr").remove();
         }
     }
+
     render() {
 
-        var type_HTMLTABLE = "";
+        var driver_HTMLTABLE = "";
         if (this.state.loading) {
-            type_HTMLTABLE = <tr>
+            driver_HTMLTABLE = <tr>
                 <td colSpan="7"><h4>Lütfen Bekleyiniz..</h4></td>
             </tr>
         } else {
-            type_HTMLTABLE =
-                this.state.type.map((item) => {
+            driver_HTMLTABLE =
+                this.state.driver.map((item) => {
                     return (
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
+                            <td>{item.lastname}</td>
+                            <td>{item.age}</td>
+                            <td>{item.tc}</td>
                             <td>
-                                <Link to={`/type-edit/${item.id}`}
+                                <Link to={`/driver-edit/${item.id}`}
                                       className="btn btn-success btn-sm">Düzenle</Link>
                             </td>
                             <td>
-                                <button type="button" onClick={(e) => this.typeDelete(e, item.id)} className="btn btn-danger btn-sm">Sil
+                                <button type="button" onClick={(e) => this.driverDelete(e, item.id)}
+                                        className="btn btn-danger btn-sm">Sil
                                 </button>
                             </td>
                         </tr>
@@ -75,8 +80,8 @@ class Type extends Component {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <h4> Yolcu Tipi Sayfası
-                                    <Link to="/type-create" className="btn btn-primary btn-sm float-end">Yolcu
+                                <h4> Araç ve Sürücü Sayfası
+                                    <Link to="/driver-create" className="btn btn-primary btn-sm float-end">Sürücü
                                         Ekle</Link>
                                 </h4>
                             </div>
@@ -85,14 +90,17 @@ class Type extends Component {
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Yolcu Tipi</th>
+                                        <th>İsim</th>
+                                        <th>Soyisim</th>
+                                        <th>Yaş</th>
+                                        <th>TC</th>
                                         <th>Düzenle</th>
                                         <th>Sil</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {type_HTMLTABLE}
+                                    {driver_HTMLTABLE}
                                     </tbody>
                                 </table>
                             </div>
@@ -104,4 +112,4 @@ class Type extends Component {
     }
 }
 
-export default Type;
+export default Vehicle;

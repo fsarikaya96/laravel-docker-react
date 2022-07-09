@@ -51,15 +51,15 @@ return [
     'filled' => ':attribute alanının doldurulması zorunludur.',
     'gt' => [
         'numeric' => ':attribute, :value değerinden büyük olmalı.',
-        'file'    => ':attribute, :value kilobayt boyutundan büyük olmalı.',
-        'string'  => ':attribute, :value karakterden uzun olmalı.',
-        'array'   => ':attribute, :value taneden fazla olmalı.',
+        'file' => ':attribute, :value kilobayt boyutundan büyük olmalı.',
+        'string' => ':attribute, :value karakterden uzun olmalı.',
+        'array' => ':attribute, :value taneden fazla olmalı.',
     ],
     'gte' => [
         'numeric' => ':attribute, :value kadar veya daha fazla olmalı.',
-        'file'    => ':attribute, :value kilobayt boyutu kadar veya daha büyük olmalı.',
-        'string'  => ':attribute, :value karakter kadar veya daha uzun olmalı.',
-        'array'   => ':attribute, :value tane veya daha fazla olmalı.',
+        'file' => ':attribute, :value kilobayt boyutu kadar veya daha büyük olmalı.',
+        'string' => ':attribute, :value karakter kadar veya daha uzun olmalı.',
+        'array' => ':attribute, :value tane veya daha fazla olmalı.',
     ],
     'image' => ':attribute alanı resim dosyası olmalıdır.',
     'in' => ':attribute değeri geçersiz.',
@@ -71,15 +71,15 @@ return [
     'json' => ':attribute geçerli bir JSON değişkeni olmalıdır.',
     'lt' => [
         'numeric' => ':attribute, :value değerinden küçük olmalı.',
-        'file'    => ':attribute, :value kilobayt boyutundan küçük olmalı.',
-        'string'  => ':attribute, :value karakterden kısa olmalı.',
-        'array'   => ':attribute, :value taneden az olmalı.',
+        'file' => ':attribute, :value kilobayt boyutundan küçük olmalı.',
+        'string' => ':attribute, :value karakterden kısa olmalı.',
+        'array' => ':attribute, :value taneden az olmalı.',
     ],
     'lte' => [
         'numeric' => ':attribute, :value kadar veya daha küçük olmalı.',
-        'file'    => ':attribute, :value kilobayt boyutu kadar veya daha küçük olmalı.',
-        'string'  => ':attribute, :value karakter kadar veya daha kısa olmalı.',
-        'array'   => ':attribute, :value tane veya daha az olmalı.',
+        'file' => ':attribute, :value kilobayt boyutu kadar veya daha küçük olmalı.',
+        'string' => ':attribute, :value karakter kadar veya daha kısa olmalı.',
+        'array' => ':attribute, :value tane veya daha az olmalı.',
     ],
     'mac_address' => ':attribute geçerli bir MAC adresi olmalıdır.',
     'max' => [
@@ -167,10 +167,15 @@ return [
     */
 
     'attributes' => [
-        'name' => 'İsim',
-        'lastname' => 'Soyisim',
-        'phone' => 'Telefon',
-        'type' => 'Yolcu Tipi'
+        'name'      => 'İsim',
+        'lastname'  => 'Soyisim',
+        'phone'     => 'Telefon',
+        'type'      => 'Eğer yoksa Yolcu Tipinden ekleyiniz | Yolcu Tipi',
+        'plate'     => 'Plaka',
+        'model'     => 'Model',
+        'driver'    => 'Sürücü',
+        'tc'        => 'TC Kimlik',
+        'age'       => 'Yaş',
 
     ],
 

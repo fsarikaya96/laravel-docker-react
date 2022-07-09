@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ResponseCodes;
-use App\Helpers\ResponseResult;
-use App\Models\PassengerType;
+use App\Models\Driver;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class TypeController extends Controller
+class DriverController extends Controller
 {
-    public function index():object
+    /**
+     * @return object
+     */
+    public function index(): object
     {
-        $type =  PassengerType::all();
-        return response()->json(['success' => true, 'message' => $type]);
+        $driver = Driver::all();
+
+        return response()->json(['success' => true, 'message' => $driver]);
     }
 
     /**
@@ -25,13 +28,19 @@ class TypeController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required',
+            'lastname' => 'required',
+            'age' => 'required|numeric',
+            'tc' => 'required|unique:drivers',
         ]);
 
         if ($validate->fails()) {
             return response()->json(['success' => false, 'errors' => $validate->errors()]);
         }
-        DB::table('passenger_type')->insert([
+        DB::table('drivers')->insert([
             'name' => $request->name,
+            'lastname' => $request->lastname,
+            'age' => $request->age,
+            'tc' => $request->tc,
         ]);
         return response()->json(['success' => true, 'message' => "Başarıyla Kaydedildi.."]);
     }
@@ -42,9 +51,9 @@ class TypeController extends Controller
      */
     public function edit($id): object
     {
-        $type = PassengerType::find($id);
-        if ($type) {
-            return response()->json(['success' => true, 'message' => $type]);
+        $driver = Driver::find($id);
+        if ($driver) {
+            return response()->json(['success' => true, 'message' => $driver]);
         } else {
             return response()->json(['success' => false, 'errors' => "Böyle Bir Kayıt Bulunamadı.."]);
         }
@@ -60,36 +69,29 @@ class TypeController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required',
+            'lastname' => 'required',
+            'age' => 'required|numeric',
+            'tc' => 'required|unique:drivers,tc,'.$id,
         ]);
         if ($validate->fails()) {
             return response()->json(['success' => false, 'errors' => $validate->errors()]);
         }
-        PassengerType::where('id', $id)->update([
-            'name' => $request->name,
+        $driverUpdate = Driver::where('id', $id)->update([
+            'name'      => $request->name,
+            'lastname'  => $request->lastname,
+            'age'       => $request->age,
+            'tc'        => $request->tc,
         ]);
         return response()->json(['success' => true, 'message' => "Başarıyla Güncellendi.."]);
     }
-    public function destroy($id)
-    {
-        $type = PassengerType::where('id',$id)->delete();
 
-        if ($type) {
-            return response()->json(['success' => true, 'message' => "Başarıyla Silinmiştir.."]);
-        }
-        return response()->json(['success' => false, 'message' => "Silinemedi.."], 404);
-    }
-    /*
-    public function test(Request $request)
+    /**
+     * @param $id
+     * @return object
+     */
+    public function destroy($id):object
     {
-        $validate = Validator::make($request->all(), [
-            'name' => 'required',
-            'lastname' => 'required',
-        ]);
-        if ($validate->fails()) {
-//            return response()->json(['success' => false, 'errorMessage' => $validate->messages()->all()]);
-             return ResponseResult::generate(false,$validate->messages()->all());
-        }
-        return ResponseResult::generate(true,"Başarılı",ResponseCodes::HTTP_OK);
+        Driver::where('id',$id)->delete();
+        return response()->json(['success' => true, 'message' => "Başarıyla Silindi.."]);
     }
-    */
 }

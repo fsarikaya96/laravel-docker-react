@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Passenger;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class PassengerController extends Controller
+class VehicleController extends Controller
 {
     /**
      * @return object
      */
     public function index(): object
     {
-        $passenger = Passenger::with('type')->orderBy('id', 'desc')->get();
+        $vehicle = Vehicle::all();
 
-        return response()->json(['success' => true, 'message' => $passenger]);
-
+        return response()->json(['success' => true, 'message' => $vehicle]);
     }
 
     /**
@@ -27,20 +26,16 @@ class PassengerController extends Controller
     public function create(Request $request): object
     {
         $validate = Validator::make($request->all(), [
-            'name' => 'required',
-            'lastname' => 'required|min:5',
-            'phone' => 'required|min:10',
-            'type' => 'required'
+            'plate' => 'required',
+            'model' => 'required',
         ]);
 
         if ($validate->fails()) {
             return response()->json(['success' => false, 'errors' => $validate->errors()]);
         }
-        DB::table('passengers')->insert([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'lastname' => $request->lastname,
-            'type_id' => $request->type,
+        DB::table('vehicles')->insert([
+            'plate' => $request->plate,
+            'model' => $request->model,
         ]);
         return response()->json(['success' => true, 'message' => "Başarıyla Kaydedildi.."]);
     }
@@ -51,9 +46,9 @@ class PassengerController extends Controller
      */
     public function edit($id): object
     {
-        $passenger = Passenger::find($id);
-        if ($passenger) {
-            return response()->json(['success' => true, 'message' => $passenger,], 200);
+        $vehicle = Vehicle::find($id);
+        if ($vehicle) {
+            return response()->json(['success' => true, 'message' => $vehicle]);
         } else {
             return response()->json(['success' => false, 'errors' => "Böyle Bir Kayıt Bulunamadı.."]);
         }
@@ -68,20 +63,15 @@ class PassengerController extends Controller
     public function update(Request $request, $id): object
     {
         $validate = Validator::make($request->all(), [
-            'name' => 'required',
-            'lastname' => 'required|min:5',
-            'phone' => 'required|min:10',
-            'type' => 'required'
+            'plate' => 'required',
+            'model' => 'required',
         ]);
         if ($validate->fails()) {
             return response()->json(['success' => false, 'errors' => $validate->errors()]);
-
         }
-        Passenger::where('id', $id)->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'lastname' => $request->lastname,
-            'type_id' => $request->type,
+        Vehicle::where('id', $id)->update([
+            'plate' => $request->plate,
+            'model' => $request->model,
         ]);
         return response()->json(['success' => true, 'message' => "Başarıyla Güncellendi.."]);
     }
@@ -92,10 +82,9 @@ class PassengerController extends Controller
      */
     public function destroy($id): object
     {
-        $passenger = Passenger::where('id', $id)->delete();
-        if ($passenger) {
-            return response()->json(['success' => true, 'message' => "Başarıyla Silinmiştir.."]);
-        }
-        return response()->json(['success' => false, 'message' => "Silinemedi.."], 404);
+        Vehicle::where('id', $id)->delete();
+
+        return response()->json(['success' => true, 'message' => "Başarıyla Silindi.."]);
     }
+
 }

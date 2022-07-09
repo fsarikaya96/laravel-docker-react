@@ -7,11 +7,12 @@ Tüzük
 
  Araç ve o araca ait sürücü sistemden tanımlanmalıdır. Araçlar sistem üzerinden transferlere atanacak. Araçlar, Yolcular ve Transferler ayrı tablolarda tutulmalıdır
 
- Transferlerde Kimlik (Benzersiz, Otomatik Artış), Yolcu Kimliği, Hareket Tarihi, Hareket Saati, Başlangıç Noktası, Bitiş Noktası, Araç Kimliği bilgileri saklanmalıdır.
+ Transferlerde Kimlik (Benzersiz, Otomatik Artış), Yolcu Kimliği, Hareket Tarihi, Hareket Saati, Başlangıç Noktası, Bitiş Noktası,
+  Araç Kimliği bilgileri saklanmalıdır.
 
 Örnek Senaryo
- Kullanıcı sisteme ilk olarak yolcuları ekleyecektir. Ardından sisteme araç ve sürücü bilgilerini ekleyecektir. Daha sonra aktarımı oluşturacaktır. Transferler sayfasında,
- yolcu ve araç bu transferin bilgileri de detaylarıyla birlikte görünecektir.
+ Kullanıcı sisteme ilk olarak yolcuları ekleyecektir. Ardından sisteme araç ve sürücü bilgilerini ekleyecektir. Daha sonra aktarımı oluşturacaktır. Transferler
+ sayfasında, yolcu ve araç bu transferin bilgileri de detaylarıyla birlikte görünecektir.
 
  Sistemde yolcu ve araçlar için listeleme, düzenleme ve silme ekranları bulunmalıdır. Aktarımda sadece görüntüleme ve düzenleme olması yeterlidir.
  Yolcular ekranında yolcu tipine göre filtreleme için ayrı bir özellik bulunmalıdır. Ayrı bir ekran Bugünkü transferleri de göstermek güzel olurdu.

@@ -3,10 +3,13 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
 
-class TypeCreate extends Component {
+class DriverCreate extends Component {
 
     state = {
         name: '',
+        lastname: '',
+        age: '',
+        tc: '',
         error_list: [],
     }
     handleInput = (e) => {
@@ -15,15 +18,15 @@ class TypeCreate extends Component {
         });
     }
     /**
-     * Passenger Create
+     * Driver Create
      * @param e
      * @returns {Promise<void>}
      */
-    saveType = async (e) => {
+    saveDriver = async (e) => {
         e.preventDefault();
         document.getElementById('createBtn').disabled = true
         document.getElementById('createBtn').innerText = "Yönlendiriliyorsunuz..";
-        const res = await axios.post('http://localhost:8080/api/type-create', this.state);
+        const res = await axios.post('http://localhost:8080/api/driver-create', this.state);
         if (res.data.success === true) {
             await swal({
                 title: "Başarılı",
@@ -33,8 +36,11 @@ class TypeCreate extends Component {
             });
             this.setState({
                 name: '',
+                lastname: '',
+                age: '',
+                tc: '',
             });
-            window.location.replace('http://localhost:8080/passenger-type');
+            window.location.replace('http://localhost:8080/driver');
         } else {
             document.getElementById('createBtn').disabled = false
             document.getElementById('createBtn').innerText = "Ekle";
@@ -50,25 +56,48 @@ class TypeCreate extends Component {
             <div className="container py-3">
                 <div className="row">
                     <div className="col-md-12">
-                        <h2 className="text-center mb-3">Yolcu Tipi Sayfası</h2>
+                        <h2 className="text-center mb-3">Sürücü Sayfası</h2>
                         <hr className="mb-4"/>
                         <div className="row justify-content-center">
                             <div className="col-md-6">
                                 <div className="card card-outline-secondary">
                                     <div className="card-header">
-                                        <h3 className="mb-0">Yolcu Tipi Ekle
-                                            <Link to="/passenger-type" className="btn btn-primary btn-sm float-end">Geri</Link>
+                                        <h3 className="mb-0">Sürücü Ekle
+                                            <Link to="/driver" className="btn btn-primary btn-sm float-end">Geri</Link>
                                         </h3>
                                     </div>
                                     <div className="card-body">
-                                        <form onSubmit={this.saveType}>
+                                        <form onSubmit={this.saveDriver}>
                                             <div className="form-group">
-                                                <label htmlFor="name">Yolcu Tipi (Hasta)</label>
+                                                <label htmlFor="name">İsim</label>
                                                 <input className="form-control" onChange={this.handleInput}
                                                        value={this.state.name} id="name"
                                                        name="name" type="text"/>
                                                 <span className="text-danger">{this.state.error_list.name}</span>
                                             </div>
+                                            <div className="form-group">
+                                                <label htmlFor="lastname">Soyisim</label>
+                                                <input className="form-control" onChange={this.handleInput}
+                                                       value={this.state.lastname} id="lastname"
+                                                       name="lastname" type="text"/>
+                                                <span className="text-danger">{this.state.error_list.lastname}</span>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="age">Yaş</label>
+                                                <input className="form-control" onChange={this.handleInput}
+                                                       value={this.state.age} id="age"
+                                                       name="age" type="text"/>
+                                                <span className="text-danger">{this.state.error_list.age}</span>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="tc">TC</label>
+                                                <input className="form-control" onChange={this.handleInput}
+                                                       value={this.state.tc} id="tc"
+                                                       name="tc" type="text"/>
+                                                <span className="text-danger">{this.state.error_list.tc}</span>
+                                            </div>
+
+
                                             <button className="btn btn-success mt-3 btn-block" style={{width: "100%"}}
                                                     id="createBtn"  type="submit">Ekle
                                             </button>
@@ -85,4 +114,4 @@ class TypeCreate extends Component {
     }
 }
 
-export default TypeCreate;
+export default DriverCreate;

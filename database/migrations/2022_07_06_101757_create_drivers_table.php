@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('passengers', function (Blueprint $table) {
+        Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('lastname');
-            $table->string('phone');
-            $table->bigInteger('type_id')->unsigned();
+            $table->string('age');
+            $table->string('tc')->unique();
 
-            $table->foreign('type_id')->on('passenger_type')->references('id')->cascadeOnDelete();
+
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('passengers');
+        Schema::dropIfExists('drivers');
     }
 };

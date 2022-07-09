@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('passenger_id')->unsigned();
             $table->bigInteger('vehicle_id')->unsigned();
+            $table->bigInteger('driver_id')->unsigned();
 
             $table->date('start_date');
             $table->time('start_time');
@@ -25,6 +26,7 @@ return new class extends Migration
 
             $table->foreign('passenger_id')->on('passengers')->references('id')->cascadeOnDelete();
             $table->foreign('vehicle_id')->on('vehicles')->references('id')->cascadeOnDelete();
+            $table->foreign('driver_id')->on('drivers')->references('id')->cascadeOnDelete();
         });
     }
 

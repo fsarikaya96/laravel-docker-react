@@ -3,9 +3,9 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
 
-class Type extends Component {
+class Vehicle extends Component {
     state = {
-        type: [],
+        vehicle: [],
         loading: true,
     }
 
@@ -14,25 +14,25 @@ class Type extends Component {
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-        const res = await axios.get('http://localhost:8080/api/passenger-type');
-        // console.log(res);
+        const res = await axios.get('http://localhost:8080/api/vehicle');
         if (res.data.success === true) {
             this.setState({
-                type: res.data.message,
+                vehicle: res.data.message,
                 loading: false
             });
         }
     }
+
     /**
-     * Type Delete
+     * Driver Delete
      * @param e
      * @param id
      * @returns {Promise<void>}
      */
-    typeDelete = async (e, id) => {
+    vehicleDelete = async (e, id) => {
         const deleteBtn = e.currentTarget;
         deleteBtn.innerText = "Siliniyor";
-        const res = await axios.delete(`http://localhost:8080/api/type-delete/${id}`)
+        const res = await axios.delete(`http://localhost:8080/api/vehicle-delete/${id}`)
         if (res.data.success === true) {
             await swal({
                 title: "Başarılı",
@@ -43,26 +43,28 @@ class Type extends Component {
             deleteBtn.closest("tr").remove();
         }
     }
+
     render() {
 
-        var type_HTMLTABLE = "";
+        var vehicle_HTMLTABLE = "";
         if (this.state.loading) {
-            type_HTMLTABLE = <tr>
+            vehicle_HTMLTABLE = <tr>
                 <td colSpan="7"><h4>Lütfen Bekleyiniz..</h4></td>
             </tr>
         } else {
-            type_HTMLTABLE =
-                this.state.type.map((item) => {
+            vehicle_HTMLTABLE =
+                this.state.vehicle.map((item) => {
                     return (
                         <tr key={item.id}>
                             <td>{item.id}</td>
-                            <td>{item.name}</td>
+                            <td>{item.plate}</td>
+                            <td>{item.model}</td>
                             <td>
-                                <Link to={`/type-edit/${item.id}`}
+                                <Link to={`/vehicle-edit/${item.id}`}
                                       className="btn btn-success btn-sm">Düzenle</Link>
                             </td>
                             <td>
-                                <button type="button" onClick={(e) => this.typeDelete(e, item.id)} className="btn btn-danger btn-sm">Sil
+                                <button type="button" onClick={(e) => this.vehicleDelete(e, item.id)} className="btn btn-danger btn-sm">Sil
                                 </button>
                             </td>
                         </tr>
@@ -75,8 +77,8 @@ class Type extends Component {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <h4> Yolcu Tipi Sayfası
-                                    <Link to="/type-create" className="btn btn-primary btn-sm float-end">Yolcu
+                                <h4> Araç ve Sürücü Sayfası
+                                    <Link to="/vehicle-create" className="btn btn-primary btn-sm float-end">Araç ve Sürücü
                                         Ekle</Link>
                                 </h4>
                             </div>
@@ -85,14 +87,15 @@ class Type extends Component {
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Yolcu Tipi</th>
+                                        <th>Plaka</th>
+                                        <th>Araç Modeli</th>
                                         <th>Düzenle</th>
                                         <th>Sil</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {type_HTMLTABLE}
+                                    {vehicle_HTMLTABLE}
                                     </tbody>
                                 </table>
                             </div>
@@ -104,4 +107,4 @@ class Type extends Component {
     }
 }
 
-export default Type;
+export default Vehicle;

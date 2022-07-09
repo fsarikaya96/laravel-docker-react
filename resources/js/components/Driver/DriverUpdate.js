@@ -4,7 +4,7 @@ import {withUrlParams} from "../urlParams";
 import swal from "sweetalert";
 import {Link} from "react-router-dom";
 
-class PassengerUpdate extends Component {
+class DriverUpdate extends Component {
     constructor(props) {
         super(props);
     }
@@ -12,10 +12,9 @@ class PassengerUpdate extends Component {
     state = {
         name: '',
         lastname: '',
-        phone: '',
-        type: '',
+        age: '',
+        tc: '',
         error_list: [],
-        data: [],
     }
     handleInput = (e) => {
         this.setState({
@@ -24,33 +23,20 @@ class PassengerUpdate extends Component {
     }
 
     /**
-     * Passenger PassengerType List and Passenger Edit Passenger By ID
+     * Vehicle and Driver By ID
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-
-        const response = await axios.get('http://localhost:8080/api/passenger-type');
-        if (response.data.success === true){
-            this.setState({
-                data: response.data.message,
-            });
-        }
         const { id } = this.props.params;
-        const res = await axios.get(`http://localhost:8080/api/passenger-edit/${id}`);
+        const res = await axios.get(`http://localhost:8080/api/driver-edit/${id}`);
 
         if (res.data.success === true){
             this.setState({
                 name: res.data.message.name,
                 lastname: res.data.message.lastname,
-                phone: res.data.message.phone,
-                type: res.data.message.type_id,
+                age: res.data.message.age,
+                tc: res.data.message.tc,
             });
-
-            // Select what is in database
-            document.getElementById('type').value = res.data.message.type_id;
-
-
-
         }else {
             await swal({
                 title: "Başarısız",
@@ -58,21 +44,21 @@ class PassengerUpdate extends Component {
                 icon: "warning",
                 button: "Tamam",
             });
-            window.location.replace('http://localhost:8080/passenger');
+            window.location.replace('http://localhost:8080/driver');
         }
     }
 
     /**
-     * Passenger Update
+     * Driver Update
      * @param e
      * @returns {Promise<void>}
      */
-    updatePassenger = async (e) => {
+    updateDriver = async (e) => {
         e.preventDefault();
         document.getElementById('updateBtn').disabled = true
         document.getElementById('updateBtn').innerText = "Kaydediliyor..";
         const { id } = this.props.params;
-        const res = await axios.put(`http://localhost:8080/api/passenger-update/${id}`, this.state);
+        const res = await axios.put(`http://localhost:8080/api/driver-update/${id}`, this.state);
         if (res.data.success === true) {
             await swal({
                 title: "Başarılı",
@@ -80,7 +66,7 @@ class PassengerUpdate extends Component {
                 icon: "success",
                 button: "Tamam",
             });
-            window.location.replace('http://localhost:8080/passenger');
+            window.location.replace('http://localhost:8080/driver');
         } else {
             document.getElementById('updateBtn').disabled = false
             document.getElementById('updateBtn').innerText = "Güncelle";
@@ -91,32 +77,22 @@ class PassengerUpdate extends Component {
     }
 
     render() {
-        var type_HTMLTABLE = "";
-        type_HTMLTABLE =
-            this.state.data.map((item) => {
-
-                return (
-                    <option key={item.id} value={item.id}>{item.name}</option>
-                );
-            });
-        // const {data} = this.state;
         return (
             <div className="container py-3">
                 <div className="row">
                     <div className="col-md-12">
-                        <h2 className="text-center mb-3">Yolcu Sayfası</h2>
+                        <h2 className="text-center mb-3">Sürücü Sayfası</h2>
                         <hr className="mb-4"/>
                         <div className="row justify-content-center">
                             <div className="col-md-6">
                                 <div className="card card-outline-secondary">
                                     <div className="card-header">
-                                        <h3 className="mb-0">Yolcu Güncelle
-                                            <Link to="/passenger" className="btn btn-primary btn-sm float-end">Geri</Link>
+                                        <h3 className="mb-0">Sürücü Güncelle
+                                            <Link to="/driver" className="btn btn-primary btn-sm float-end">Geri</Link>
                                         </h3>
                                     </div>
                                     <div className="card-body">
-
-                                        <form onSubmit={this.updatePassenger}>
+                                        <form onSubmit={this.updateDriver}>
                                             <div className="form-group">
                                                 <label htmlFor="name">İsim</label>
                                                 <input className="form-control" onChange={this.handleInput}
@@ -127,28 +103,27 @@ class PassengerUpdate extends Component {
                                             <div className="form-group">
                                                 <label htmlFor="lastname">Soyisim</label>
                                                 <input className="form-control" onChange={this.handleInput}
-                                                       value={this.state.lastname} id="lastname" name="lastname"
-                                                       type="text"/>
+                                                       value={this.state.lastname} id="lastname"
+                                                       name="lastname" type="text"/>
                                                 <span className="text-danger">{this.state.error_list.lastname}</span>
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="phone">Telefon</label>
-                                                <input className="form-control" id="phone" onChange={this.handleInput}
-                                                       value={this.state.phone} name="phone" type="text"/>
-                                                <span className="text-danger">{this.state.error_list.phone}</span>
+                                                <label htmlFor="age">Yaş</label>
+                                                <input className="form-control" onChange={this.handleInput}
+                                                       value={this.state.age} id="age"
+                                                       name="age" type="text"/>
+                                                <span className="text-danger">{this.state.error_list.age}</span>
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="type">Yolcu Tipi</label>
-                                                <select defaultValue={'DEFAULT'} name="type" id="type" onChange={this.handleInput}
-                                                        className="form-control">
-                                                    <option value="DEFAULT" disabled>Seçiniz</option>
-                                                    {type_HTMLTABLE}
-                                                </select>
-                                                <span className="text-danger">{this.state.error_list.type}</span>
-
+                                                <label htmlFor="tc">TC</label>
+                                                <input className="form-control" onChange={this.handleInput}
+                                                       value={this.state.tc} id="tc"
+                                                       name="tc" type="text"/>
+                                                <span className="text-danger">{this.state.error_list.tc}</span>
                                             </div>
+
                                             <button className="btn btn-success mt-3 btn-block" style={{width: "100%"}}
-                                                    id="updateBtn" type="submit">Güncelle
+                                                    id="updateBtn"  type="submit">Güncelle
                                             </button>
 
                                         </form>
@@ -163,4 +138,4 @@ class PassengerUpdate extends Component {
     }
 }
 
-export default withUrlParams(PassengerUpdate);
+export default withUrlParams(DriverUpdate);

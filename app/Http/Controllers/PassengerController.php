@@ -19,15 +19,6 @@ class PassengerController extends Controller
 
     }
 
-    /** Sort By Passenger Type
-     * @return object
-     */
-    public function sort(): object
-    {
-        Passenger::orderBy('type_id', 'desc')->get();
-        return response()->json(['success' => true, 'message' => "Yolcu Tipleri Sıralandı..."]);
-    }
-
     /**
      * @param Request $request
      * @return object

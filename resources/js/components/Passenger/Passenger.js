@@ -7,7 +7,11 @@ class Passenger extends Component {
     state = {
         passenger: [],
         loading: true,
-    }
+        sort: {
+            column: null,
+            direction: 'desc',
+        }
+    };
 
     /**
      * Passenger List
@@ -15,13 +19,13 @@ class Passenger extends Component {
      */
     async componentDidMount() {
         const res = await axios.get('http://localhost:8080/api/passenger');
-        // console.log(res);
         if (res.data.success === true) {
             this.setState({
                 passenger: res.data.message,
                 loading: false
             });
         }
+
     }
 
     /**
@@ -44,17 +48,52 @@ class Passenger extends Component {
             deleteBtn.closest("tr").remove();
         }
     }
-    passengerSort = async (e) => {
-        const sortBtn = e.currentTarget;
-        sortBtn.innerText = "Sıralanıyor";
-        const res = await axios.get(`http://localhost:8080/api/passenger-sort`)
-        if (res.data.success === true) {
-        sortBtn.innerText = "Sırala";
+
+    onSort = (column) => (e) => {
+        const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+        const sortedData = this.state.passenger.sort((a, b) => {
+            if (column === 'type') {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            } else {
+                return a.contractValue - b.contractValue;
+            }
+        });
+
+        if (direction === 'desc') {
+            sortedData.reverse();
         }
-    }
 
+        this.setState({
+            passenger: sortedData,
+            sort: {
+                column,
+                direction,
+            }
+        });
+    };
+
+    setArrow = (column) => {
+        let className = 'sort-direction ';
+
+        if (this.state.sort.column === column) {
+            className += this.state.sort.direction === 'asc' ? 'asc ' : 'desc';
+        }
+
+        // console.log(className);
+        // document.getElementById("sort").style.display = "none";
+
+
+        return className;
+    };
     render() {
-
         var passenger_HTMLTABLE = "";
         if (this.state.loading) {
             passenger_HTMLTABLE = <tr>
@@ -84,6 +123,7 @@ class Passenger extends Component {
                 });
         }
         return (
+
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
@@ -102,10 +142,8 @@ class Passenger extends Component {
                                         <th>İsim</th>
                                         <th>Soyisim</th>
                                         <th>Telefon</th>
-                                        <th>Yolcu Tipi
-                                            <button type="button" onClick={(e) => this.passengerSort(e)}
-                                                    className="btn btn-primary btn-sm">Sırala
-                                            </button>
+                                        <th onClick={this.onSort('type')}>Yolcu Tipi<i style={{color:"#bd6464"}} id="sort">(Sırala)</i>
+                                            <span className={this.setArrow('type')}/>
                                         </th>
                                         <th>Düzenle</th>
                                         <th>Sil</th>

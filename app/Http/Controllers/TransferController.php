@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -89,5 +90,11 @@ class TransferController extends Controller
     {
         Transfer::where('id',$id)->delete();
         return response()->json(['success' => true, 'message' => "Başarıyla Silindi.."]);
+    }
+    public function today():object
+    {
+        $transfer = Transfer::with('getPassenger', 'getVehicle', 'getDriver')->whereDate('start_date', Carbon::today())->get();
+        return response()->json(['success' => true, 'message' => $transfer]);
+
     }
 }

@@ -209,7 +209,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Home\ExampleClass::class,
+        // 'ExampleClass' => App\TodayTransfer\ExampleClass::class,
     ])->toArray(),
 
 ];

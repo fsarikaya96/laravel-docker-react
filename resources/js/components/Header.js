@@ -1,6 +1,5 @@
 import * as React from "react";
-import {  Route, Routes, Link} from 'react-router-dom';
-import Home from "./Home";
+import {Route, Routes, Link} from 'react-router-dom';
 
 import Vehicle from "./Vehicle/Vehicle";
 import VehicleCreate from "./Vehicle/VehicleCreate";
@@ -21,19 +20,18 @@ import DriverUpdate from "./Driver/DriverUpdate";
 import Transfer from "./Transfer/Transfer";
 import TransferCreate from "./Transfer/TransferCreate";
 import TransferUpdate from "./Transfer/TransferUpdate";
-
+import TodayTransfer from "./Transfer/TodayTransfer";
 
 
 export default function Header() {
 
     return (
         <div className="container">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
-                {/*<Link className="navbar-brand" to="/">Logo</Link>*/}
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 mb-3">
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">Ana Sayfa</Link>
+                            <Link className="nav-link" to="/">Bugünkü Transfler</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/transfer">Transferler</Link>
@@ -56,8 +54,7 @@ export default function Header() {
             </nav>
 
             <Routes>
-                <Route exact path="/" element={<Home/>}/>
-
+                <Route exact path="/" element={<TodayTransfer/>}/>
                 <Route exact path="/transfer" element={<Transfer/>}/>
                 <Route exact path="/transfer-create" element={<TransferCreate/>}/>
                 <Route exact path="/transfer-edit/:id" element={<TransferUpdate/>}/>

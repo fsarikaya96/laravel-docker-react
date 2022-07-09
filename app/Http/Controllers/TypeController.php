@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Helpers\ResponseCodes;
-use App\Helpers\ResponseResult;
 use App\Models\PassengerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +66,7 @@ class TypeController extends Controller
         ]);
         return response()->json(['success' => true, 'message' => "Başarıyla Güncellendi.."]);
     }
-    public function destroy($id)
+    public function destroy($id):object
     {
         $type = PassengerType::where('id',$id)->delete();
 
@@ -78,19 +75,5 @@ class TypeController extends Controller
         }
         return response()->json(['success' => false, 'message' => "Silinemedi.."], 404);
     }
-/*
-    public function test(Request $request)
-    {
-        $validate = Validator::make($request->all(), [
-            'name' => 'required',
-            'lastname' => 'required',
-        ]);
-        if ($validate->fails()) {
-//            return response()->json(['success' => false, 'errorMessage' => $validate->messages()->all()],404);
-             return ResponseResult::generate(false,$validate->messages()->all(),ResponseCodes::HTTP_BAD_REQUEST);
-        }
-        return ResponseResult::generate(true,"Başarılı",ResponseCodes::HTTP_OK);
-    }
-*/
 
 }

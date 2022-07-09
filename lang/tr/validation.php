@@ -175,6 +175,7 @@ return [
         'model'          => 'Model',
         'driver'         => 'Sürücü',
         'tc'             => 'TC Kimlik',
+        'age'            => 'Yaş',
         'vehicle_name'   => 'Araç',
         'passenger_name' => 'Yolcu',
         'driver_name'    => 'Sürücü',

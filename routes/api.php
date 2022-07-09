@@ -24,7 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/passenger',[PassengerController::class,'index']);
-Route::get('/passenger-sort',[PassengerController::class,'sort']);
 Route::post('/passenger-create',[PassengerController::class,'create']);
 Route::get('/passenger-edit/{id}',[PassengerController::class,'edit']);
 Route::put('/passenger-update/{id}',[PassengerController::class,'update']);
@@ -50,10 +49,9 @@ Route::put('/driver-update/{id}',[DriverController::class,'update']);
 Route::delete('/driver-delete/{id}',[DriverController::class,'destroy']);
 
 Route::get('/transfer',[TransferController::class,'index']);
+Route::get('/transfer-today',[TransferController::class,'today']);
 Route::post('/transfer-create',[TransferController::class,'create']);
 Route::get('/transfer-edit/{id}',[TransferController::class,'edit']);
 Route::put('/transfer-update/{id}',[TransferController::class,'update']);
 Route::delete('/transfer-delete/{id}',[TransferController::class,'destroy']);
 
-
-//Route::post('/test',[TypeController::class,'test'])->name('test');

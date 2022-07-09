@@ -18,6 +18,9 @@ import Driver from "./Driver/Driver";
 import DriverCreate from "./Driver/DriverCreate";
 import DriverUpdate from "./Driver/DriverUpdate";
 
+import Transfer from "./Transfer/Transfer";
+import TransferCreate from "./Transfer/TransferCreate";
+import TransferUpdate from "./Transfer/TransferUpdate";
 
 
 
@@ -31,6 +34,9 @@ export default function Header() {
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
                             <Link className="nav-link" to="/">Ana Sayfa</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/transfer">Transferler</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/vehicle">Araçlar</Link>
@@ -52,12 +58,13 @@ export default function Header() {
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
 
+                <Route exact path="/transfer" element={<Transfer/>}/>
+                <Route exact path="/transfer-create" element={<TransferCreate/>}/>
+                <Route exact path="/transfer-edit/:id" element={<TransferUpdate/>}/>
+
                 <Route exact path="/driver" element={<Driver/>}/>
                 <Route exact path="/driver-create" element={<DriverCreate/>}/>
                 <Route exact path="/driver-edit/:id" element={<DriverUpdate/>}/>
-
-
-
 
                 <Route exact path="/vehicle" element={<Vehicle/>}/>
                 <Route exact path="/vehicle-create" element={<VehicleCreate/>}/>

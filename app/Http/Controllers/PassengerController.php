@@ -14,10 +14,18 @@ class PassengerController extends Controller
      */
     public function index(): object
     {
-        $passenger = Passenger::with('type')->orderBy('id', 'desc')->get();
-
+        $passenger = Passenger::with('type')->get();
         return response()->json(['success' => true, 'message' => $passenger]);
 
+    }
+
+    /** Sort By Passenger Type
+     * @return object
+     */
+    public function sort(): object
+    {
+        Passenger::orderBy('type_id', 'desc')->get();
+        return response()->json(['success' => true, 'message' => "Yolcu Tipleri Sıralandı..."]);
     }
 
     /**

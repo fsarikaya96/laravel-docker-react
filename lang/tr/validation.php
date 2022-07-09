@@ -167,15 +167,22 @@ return [
     */
 
     'attributes' => [
-        'name'      => 'İsim',
-        'lastname'  => 'Soyisim',
-        'phone'     => 'Telefon',
-        'type'      => 'Eğer yoksa Yolcu Tipinden ekleyiniz | Yolcu Tipi',
-        'plate'     => 'Plaka',
-        'model'     => 'Model',
-        'driver'    => 'Sürücü',
-        'tc'        => 'TC Kimlik',
-        'age'       => 'Yaş',
+        'name'           => 'İsim',
+        'lastname'       => 'Soyisim',
+        'phone'          => 'Telefon',
+        'type'           => 'Eğer yoksa Yolcu Tipinden ekleyiniz | Yolcu Tipi',
+        'plate'          => 'Plaka',
+        'model'          => 'Model',
+        'driver'         => 'Sürücü',
+        'tc'             => 'TC Kimlik',
+        'vehicle_name'   => 'Araç',
+        'passenger_name' => 'Yolcu',
+        'driver_name'    => 'Sürücü',
+        'start_date'     => 'Başlangıç Tarihi',
+        'start_time'     => 'Başlangıç Saati',
+        'start_location' => 'Başlangıç Yeri',
+        'end_location'   => 'Bitiş Tarihi',
+
 
     ],
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PassengerController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/passenger',[PassengerController::class,'index']);
+Route::get('/passenger-sort',[PassengerController::class,'sort']);
 Route::post('/passenger-create',[PassengerController::class,'create']);
 Route::get('/passenger-edit/{id}',[PassengerController::class,'edit']);
 Route::put('/passenger-update/{id}',[PassengerController::class,'update']);
@@ -46,6 +48,12 @@ Route::post('/driver-create',[DriverController::class,'create']);
 Route::get('/driver-edit/{id}',[DriverController::class,'edit']);
 Route::put('/driver-update/{id}',[DriverController::class,'update']);
 Route::delete('/driver-delete/{id}',[DriverController::class,'destroy']);
+
+Route::get('/transfer',[TransferController::class,'index']);
+Route::post('/transfer-create',[TransferController::class,'create']);
+Route::get('/transfer-edit/{id}',[TransferController::class,'edit']);
+Route::put('/transfer-update/{id}',[TransferController::class,'update']);
+Route::delete('/transfer-delete/{id}',[TransferController::class,'destroy']);
 
 
 //Route::post('/test',[TypeController::class,'test'])->name('test');

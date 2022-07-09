@@ -78,7 +78,7 @@ class TypeController extends Controller
         }
         return response()->json(['success' => false, 'message' => "Silinemedi.."], 404);
     }
-    /*
+/*
     public function test(Request $request)
     {
         $validate = Validator::make($request->all(), [
@@ -86,10 +86,11 @@ class TypeController extends Controller
             'lastname' => 'required',
         ]);
         if ($validate->fails()) {
-//            return response()->json(['success' => false, 'errorMessage' => $validate->messages()->all()]);
-             return ResponseResult::generate(false,$validate->messages()->all());
+//            return response()->json(['success' => false, 'errorMessage' => $validate->messages()->all()],404);
+             return ResponseResult::generate(false,$validate->messages()->all(),ResponseCodes::HTTP_BAD_REQUEST);
         }
         return ResponseResult::generate(true,"Başarılı",ResponseCodes::HTTP_OK);
     }
-    */
+*/
+
 }

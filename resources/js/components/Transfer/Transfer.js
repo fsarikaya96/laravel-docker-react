@@ -3,9 +3,9 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
 
-class Passenger extends Component {
+class Transfer extends Component {
     state = {
-        passenger: [],
+        transfer: [],
         loading: true,
     }
 
@@ -14,26 +14,24 @@ class Passenger extends Component {
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-        const res = await axios.get('http://localhost:8080/api/passenger');
-        // console.log(res);
+        const res = await axios.get('http://localhost:8080/api/transfer');
         if (res.data.success === true) {
             this.setState({
-                passenger: res.data.message,
+                transfer: res.data.message,
                 loading: false
             });
         }
     }
-
     /**
-     * Passenger Delete
+     * Transfer Delete
      * @param e
      * @param id
      * @returns {Promise<void>}
      */
-    passengerDelete = async (e, id) => {
+    transferDelete = async (e, id) => {
         const deleteBtn = e.currentTarget;
         deleteBtn.innerText = "Siliniyor";
-        const res = await axios.delete(`http://localhost:8080/api/passenger-delete/${id}`)
+        const res = await axios.delete(`http://localhost:8080/api/transfer-delete/${id}`)
         if (res.data.success === true) {
             await swal({
                 title: "Başarılı",
@@ -44,38 +42,30 @@ class Passenger extends Component {
             deleteBtn.closest("tr").remove();
         }
     }
-    passengerSort = async (e) => {
-        const sortBtn = e.currentTarget;
-        sortBtn.innerText = "Sıralanıyor";
-        const res = await axios.get(`http://localhost:8080/api/passenger-sort`)
-        if (res.data.success === true) {
-        sortBtn.innerText = "Sırala";
-        }
-    }
-
     render() {
-
-        var passenger_HTMLTABLE = "";
+        var transfer_HTMLTABLE = "";
         if (this.state.loading) {
-            passenger_HTMLTABLE = <tr>
+            transfer_HTMLTABLE = <tr>
                 <td colSpan="7"><h4>Lütfen Bekleyiniz..</h4></td>
             </tr>
         } else {
-            passenger_HTMLTABLE =
-                this.state.passenger.map((item) => {
+            transfer_HTMLTABLE =
+                this.state.transfer.map((item) => {
                     return (
                         <tr key={item.id}>
                             <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.lastname}</td>
-                            <td>{item.phone}</td>
-                            <td>{item.type.name}</td>
+                            <td>{item.get_passenger.name} {item.get_passenger.lastname} & {item.get_passenger.phone}</td>
+                            <td>{item.get_vehicle.plate} {item.get_vehicle.model}</td>
+                            <td>{item.get_driver.name} {item.get_driver.lastname}</td>
+                            <td>{item.start_date} & {item.start_time}</td>
+                            <td>{item.start_location} & {item.end_location}</td>
+
                             <td>
-                                <Link to={`/passenger-edit/${item.id}`}
+                                <Link to={`/transfer-edit/${item.id}`}
                                       className="btn btn-success btn-sm">Düzenle</Link>
                             </td>
                             <td>
-                                <button type="button" onClick={(e) => this.passengerDelete(e, item.id)}
+                                <button type="button" onClick={(e) => this.transferDelete(e, item.id)}
                                         className="btn btn-danger btn-sm">Sil
                                 </button>
                             </td>
@@ -89,8 +79,8 @@ class Passenger extends Component {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <h4> Yolcu Sayfası
-                                    <Link to="/passenger-create" className="btn btn-primary btn-sm float-end">Yolcu
+                                <h4> Transferler Sayfası
+                                    <Link to="/transfer-create" className="btn btn-primary btn-sm float-end">Transfer
                                         Ekle</Link>
                                 </h4>
                             </div>
@@ -99,21 +89,18 @@ class Passenger extends Component {
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>İsim</th>
-                                        <th>Soyisim</th>
-                                        <th>Telefon</th>
-                                        <th>Yolcu Tipi
-                                            <button type="button" onClick={(e) => this.passengerSort(e)}
-                                                    className="btn btn-primary btn-sm">Sırala
-                                            </button>
-                                        </th>
+                                        <th>Yolcu İsim Soyisim & Telefon</th>
+                                        <th>Plaka - Araç</th>
+                                        <th>Sürücü İsim Soyisim & Telefon</th>
+                                        <th>Başlangıç Tarih & Saat</th>
+                                        <th>Başlangıç Yeri & Bitiş Yeri</th>
                                         <th>Düzenle</th>
                                         <th>Sil</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {passenger_HTMLTABLE}
+                                    {transfer_HTMLTABLE}
                                     </tbody>
                                 </table>
                             </div>
@@ -125,4 +112,4 @@ class Passenger extends Component {
     }
 }
 
-export default Passenger;
+export default Transfer;

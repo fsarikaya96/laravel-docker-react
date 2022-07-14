@@ -8136,15 +8136,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var PassengerCreate = /*#__PURE__*/function (_Component) {
-  _inherits(PassengerCreate, _Component);
+var TransferCreate = /*#__PURE__*/function (_Component) {
+  _inherits(TransferCreate, _Component);
 
-  var _super = _createSuper(PassengerCreate);
+  var _super = _createSuper(TransferCreate);
 
-  function PassengerCreate() {
+  function TransferCreate() {
     var _this;
 
-    _classCallCheck(this, PassengerCreate);
+    _classCallCheck(this, TransferCreate);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -8238,7 +8238,7 @@ var PassengerCreate = /*#__PURE__*/function (_Component) {
     return _this;
   }
 
-  _createClass(PassengerCreate, [{
+  _createClass(TransferCreate, [{
     key: "componentDidMount",
     value:
     /**
@@ -8509,10 +8509,10 @@ var PassengerCreate = /*#__PURE__*/function (_Component) {
     }
   }]);
 
-  return PassengerCreate;
+  return TransferCreate;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PassengerCreate);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TransferCreate);
 
 /***/ }),
 
@@ -8573,15 +8573,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var PassengerUpdate = /*#__PURE__*/function (_Component) {
-  _inherits(PassengerUpdate, _Component);
+var TransferUpdate = /*#__PURE__*/function (_Component) {
+  _inherits(TransferUpdate, _Component);
 
-  var _super = _createSuper(PassengerUpdate);
+  var _super = _createSuper(TransferUpdate);
 
-  function PassengerUpdate() {
+  function TransferUpdate() {
     var _this;
 
-    _classCallCheck(this, PassengerUpdate);
+    _classCallCheck(this, TransferUpdate);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -8666,7 +8666,7 @@ var PassengerUpdate = /*#__PURE__*/function (_Component) {
     return _this;
   }
 
-  _createClass(PassengerUpdate, [{
+  _createClass(TransferUpdate, [{
     key: "componentDidMount",
     value:
     /**
@@ -8986,10 +8986,10 @@ var PassengerUpdate = /*#__PURE__*/function (_Component) {
     }
   }]);
 
-  return PassengerUpdate;
+  return TransferUpdate;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_urlParams__WEBPACK_IMPORTED_MODULE_3__.withUrlParams)(PassengerUpdate));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_urlParams__WEBPACK_IMPORTED_MODULE_3__.withUrlParams)(TransferUpdate));
 
 /***/ }),
 

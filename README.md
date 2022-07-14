@@ -20,9 +20,9 @@
 **3. npm Install**
 
 ```
-  npm install axios
-  npm install react-router-dom
-  npm install sweetalert --save
+  $ npm install axios
+  $ npm install react-router-dom
+  $ npm install sweetalert --save
 ```
 **4. Url & phpMyAdmin**
 

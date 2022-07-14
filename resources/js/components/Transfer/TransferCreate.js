@@ -3,7 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
 
-class PassengerCreate extends Component {
+class TransferCreate extends Component {
 
     state = {
         error_list: [],
@@ -207,4 +207,4 @@ class PassengerCreate extends Component {
     }
 }
 
-export default PassengerCreate;
+export default TransferCreate;

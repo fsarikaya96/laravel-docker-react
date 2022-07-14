@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import swal from "sweetalert";
 import {withUrlParams} from "../urlParams";
 
-class PassengerUpdate extends Component {
+class TransferUpdate extends Component {
 
     state = {
         error_list: [],
@@ -229,4 +229,4 @@ class PassengerUpdate extends Component {
     }
 }
 
-export default withUrlParams(PassengerUpdate);
+export default withUrlParams(TransferUpdate);

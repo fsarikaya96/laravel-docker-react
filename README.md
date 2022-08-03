@@ -27,7 +27,7 @@
 **4. Url & phpMyAdmin**
 
 ```
- http://localhost:8000
+ http://localhost:8080
  http://localhost:8081
 ```
 
